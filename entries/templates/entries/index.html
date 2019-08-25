@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block style %}
+<script>
+  $(document).ready(function() {
+    $('.ui.multiple.dropdown')
+      .dropdown();
+
+  })
+
+  window.onload = function(e) {
+    function filterAge() {
+      var y = document.getElementById("age_filter").value;
+      alert(y);
+    }
+
+    function myFunction() {
+      var x = document.getElementById("hiddenform");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+  }
+</script>
+{% endblock %}
+
+
+
+{% block title %}
+Toy
+{% endblock %}
+
+{% block body %}
+<div class="ui main container">
+  <h1> List of Toys </h1>
+
+  <form id="hiddenform" method="post" action="{% url 'entries:searchage' %}" class="ui mini form">
+    {% csrf_token %}
+    <div class="field">
+      <label>Filter for age</label>
+      <select id="age_filter" onchange="this.form.submit()" name="age_filter">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+      </select>
+    </div>
+
+  </form>
+
+
+
+  <table class="ui fixed  table">
+    <thead>
+      <tr>
+        <th class="three wide single line">Toy Name</th>
+        <th class="seven wide">Description</th>
+        <th>URL</th>
+        <th>Image</th>
+        <th>Min - Max Suggested Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in entries %}
+      <tr>
+        <td>
+          <a href="{% url 'entries:oneentry' entry.id %}">
+            <h2 class="ui center aligned header"> {{ entry.toyname }}</h2>
+          </a>
+        </td>
+        <td>
+          {{ entry.descr }}
+        </td>
+        <td class="left aligned">
+          <a href="{{ entry.url }}" target="_blank"> Link to Buy </a>
+        </td>
+        <td> <img src="media/{{ entry.image_upload}}" alt="" width="100" /> </td>
+        <td>
+          <div class=""> {{ entry.age_lower }} - {{ entry.age_upper }} </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="5">
+          <div class="ui right floated pagination menu">
+
+            {% if entries.has_previous %}
+            <a href="?page=1" class="icon item">
+              <i class="angle double left icon"></i>
+            </a>
+            <a href="?page={{ entries.previous_page_number }}" class="icon item">
+              <i class="chevron left icon"></i>
+            </a>
+            {% endif %}
+            <div class="disabled item"> {{ entries.number }} of {{ entries.paginator.num_pages }}
+            </div>
+            {% if entries.has_next %} <a href="?page={{ entries.next_page_number }}" class="icon item">
+              <i class="right chevron icon"></i>
+            </a>
+            <a href="?page={{ entries.paginator.num_pages }}" class="icon item">
+              <i class="angle double right icon"></i>
+            </a>
+            {% endif %}
+
+          </div>
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+
+{% endblock %}

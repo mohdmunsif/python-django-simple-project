@@ -1,0 +1,30 @@
+     <nav>
+       <div class="ui  green pointing menu">
+         <a class="item" href="{% url 'entries:welcome'  %}">
+           Home
+         </a>
+         <a {% if active_page == "browse" %} class="active item" {% else %} class="item" {% endif %} href="{% url 'entries:browse'  %} " data=" ">
+           Browse/Search
+         </a>
+         <a class="item" href="{% url 'entries:submit'  %}">
+           Submit Toys
+         </a>
+         <a class="item" href="{% url 'users:logout'  %}">
+           Logout
+         </a>
+         <a {% if active_page == "account" %} class=" active item" {% else %} class="item" {% endif %} href=" {% url 'users:account'  %}" data=" ">
+           Account
+         </a>
+         <div class=" right menu">
+           <div class="item">
+             <form method="post" action="{% url 'entries:search' %}" class="ui mini form">
+               {% csrf_token %}
+               <div class="ui transparent icon input">
+                 <input type="text" placeholder="Search..." name="searchstr">
+
+               </div>
+             </form>
+           </div>
+         </div>
+       </div>
+     </nav>

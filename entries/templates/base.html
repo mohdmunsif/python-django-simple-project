@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+  {% block style %}
+  {% endblock %}
+
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+
+<body>
+  {% include "navbar.html" %}
+
+  {% block body %}
+  {% endblock %}
+</body>
+
+</html>

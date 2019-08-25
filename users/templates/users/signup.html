@@ -1,0 +1,52 @@
+{% extends "users/base.html" %}
+
+{% block style %}
+<style>
+  body>.grid {
+    height: 100%;
+  }
+
+  .image {
+    margin-top: -100px;
+  }
+
+  .column {
+    max-width: 450px;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="ui middle aligned right center aligned grid">
+  <div class="column">
+    <h2 class="ui image header">
+      <div class="content">
+        Sign Up
+      </div>
+    </h2>
+    <form method="post" action="{% url 'users:signup'%}" class="ui mini form">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="field">
+        <div class="ui input">
+          {{ field.label_tag }}<br>
+          {{ field }}
+        </div>
+      </div>
+      {% if field.help_text %}
+      <div class="ui ignored info message">
+        <small style=" color: grey" class="right aligned">{{ field.help_text }}</small>
+      </div>
+      {% endif %}
+      {% for error in field.errors %}
+      <p style="color: red">{{ error }}</p>
+      {% endfor %}
+
+      {% endfor %}
+
+      <button class="ui left floated fluid large blue submit button" type="submit">Sign up</button>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

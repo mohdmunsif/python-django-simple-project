@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+Toy
+{% endblock %}
+
+{% block body %}
+<div class="ui main container">
+  <h1> Toy Details </h1>
+
+  <table class="ui fixed  table">
+    <thead>
+      <tr>
+        <th class="three wide single line">Toy Name</th>
+        <th class="seven wide">Description</th>
+        <th>URL</th>
+        <th>Image</th>
+        <th>Min - Max Suggested Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <h2 class="ui center aligned header"> {{ entry.toyname }}</h2>
+
+        </td>
+        <td>
+          {{ entry.descr }}
+        </td>
+        <td class="left aligned">
+          <a href="{{ entry.url }}" target="_blank"> Link to Buy </a>
+        </td>
+        <td> <img src="/media/{{ entry.image_upload}}" alt="" width="100" /> </td>
+        <td>
+          <div class=""> {{ entry.age_lower }} - {{ entry.age_upper }} </div>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+
+
+  <h2> Placeholder for review </h2>
+  <form method="post" action="" class="ui mini form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="html ui top attached segment">
+      <!-- <div class="ui top attached label"> Toy Submission Form <i data-content="Copy code" class="copy link icon"></i> -->
+      <!-- </div> -->
+      <div class="ui form">
+        <div class="field">
+          <label>Subject</label>
+          <input type="text" name="toyname" id="id_subject" "></input>
+        </div>
+        <div class=" field">
+          <label>Review</label>
+          <textarea name="review" id="id_review"> </textarea>
+        </div>
+
+        <button class="ui blue field fluid submit button" type="submit">
+          Submit
+        </button>
+        <!-- <button class="ui left floated fluid blue submit button" type="submit">Submit Entry</button> -->
+      </div>
+      {% for field in form %}
+      {% for error in field.errors %}
+      <p style="color: red">Field:{{ field.label }} - {{ error }} </p>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </form>
+
+</div>
+{% endblock %}

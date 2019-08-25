@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+  body>.grid {
+    height: 100%;
+  }
+
+  .image {
+    margin-top: -100px;
+  }
+
+  .column {
+    max-width: 450px;
+  }
+</style>
+{% endblock %}
+
+
+{% block title %}
+Submit Toy Suggestion
+{% endblock %}
+
+{% block body %}
+<div class="ui main container">
+  <h1> Submit a toy suggestion </h1>
+  <form method="post" action="{% url 'entries:submit' %}" class="ui mini form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="html ui top attached segment">
+      <!-- <div class="ui top attached label"> Toy Submission Form <i data-content="Copy code" class="copy link icon"></i> -->
+      <!-- </div> -->
+      <div class="ui form">
+        <div class="field">
+          <label>Toy Name</label>
+          <input type="text" name="toyname" id="id_toyname" {% if form.toyname.value %} value="{{ form.toyname.value }} {% endif %}"></input>
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <textarea name="descr" id="id_descr" value="{{ form.descr.value }}">{% if form.descr.value %} {{ form.descr.value }} {% endif %}</textarea>
+        </div>
+
+        <div class="field">
+          <label>Link to buy the toy </label>
+          <input type="text" name="url" id="id_url" {% if form.url.value %} value="{{ form.url.value }}" {% endif %}></input>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <label>Min Age</label>
+            <input type="number" name="age_lower" id="id_age_lower" {% if form.age_lower.value %} value="{{  form.age_lower.value }}" {% endif %}></input>
+          </div>
+          <div class="field">
+            <label>Max Age</label>
+            <input type="number" name="age_upper" id="id_age_upper" {% if form.age_upper.value %} value="{{ form.age_upper.value }}" {% endif %}></input>
+          </div>
+        </div>
+        <div class="field">
+          <input type="file" name="image_upload" id="id_image_upload">
+        </div>
+
+        <button class="ui blue field fluid submit button" type="submit">
+          Submit
+        </button>
+        <!-- <button class="ui left floated fluid blue submit button" type="submit">Submit Entry</button> -->
+      </div>
+      {% for field in form %}
+      {% for error in field.errors %}
+      <p style="color: red">Field:{{ field.label }} - {{ error }} </p>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </form>
+
+</div>
+
+{% endblock %}
